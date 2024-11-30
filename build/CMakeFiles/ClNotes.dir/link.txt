@@ -1,1 +1,0 @@
-clang++ -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/ClNotes.dir/src/main.cpp.o CMakeFiles/ClNotes.dir/src/cli.cpp.o CMakeFiles/ClNotes.dir/src/database.cpp.o -o ClNotes  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib/libsqlite3.tbd
