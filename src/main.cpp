@@ -1,7 +1,8 @@
 #include "../include/cli.hpp"
-using namespace std;
+#include "../include/database.hpp"
+
 int main(int argc, char **argv)
 {
-    cout << "Hello" << endl;
+    Database db("clNotes.db");
     return 0;
 }
