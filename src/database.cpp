@@ -1,5 +1,4 @@
 #include "../include/database.hpp"
-#include "database.hpp"
 
 Database::Database(const string &databaseName)
 {
