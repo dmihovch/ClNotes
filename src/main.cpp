@@ -3,28 +3,19 @@
 
 int main(int argc, char **argv)
 {
-    Database db("clNotes.db");
-
-    string createTableQ = R"(
-        CREATE TABLE IF NOT EXISTS notes (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            quick INTEGER DEFAULT 1,
-            title TEXT NOT NULL,
-            content TEXT NOT NULL
-        );
-    )";
-
-    if (!db.execQuery(createTableQ))
+    Database *db = initDb();
+    if (!db)
     {
-        cerr << "Error Creating/Opening Table Return Code 1" << endl;
         return 1;
     }
+    parseArgs(argc, argv, db);
 
+    // example of how to add a note to the table
     string insertVal = R"(
         INSERT INTO notes(title, content)
         VALUES ('A Note!','Content of my note!')
     )";
-    if (!db.execQuery(insertVal))
+    if (!db->execQuery(insertVal))
     {
         cerr << "Error inserting Value Return Code 1" << endl;
     }
@@ -33,7 +24,7 @@ int main(int argc, char **argv)
     string getValTest = R"(
         SELECT * FROM notes
     )";
-    sqlite3_stmt *find = db.prepStatement(getValTest);
+    sqlite3_stmt *find = db->prepStatement(getValTest);
     if (!find)
     {
         cerr << "Error finding Values Return Code 1" << endl;
@@ -47,21 +38,9 @@ int main(int argc, char **argv)
         cout << "ID: " << id << " quick flag: " << quick << " title: " << title << " content: " << content << endl;
     }
     sqlite3_finalize(find);
+    // end examples
 
-    if (argc > 1)
-    {
-        if (strcmp(argv[1], "--dan") == 0) // is true, ya it's weird dan = delete all notes
-        {
-            string delVal = R"(
-                DELETE FROM notes
-            )";
-            if (!db.execQuery(delVal))
-            {
-                cerr << "Error deleting Values from Database Return Code 1";
-            }
-        }
-    }
-
-    db.close();
+    // close db connection and return successful exit code 0
+    db->close();
     return 0;
 }

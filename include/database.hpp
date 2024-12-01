@@ -17,3 +17,5 @@ public:
     sqlite3_stmt *prepStatement(const string &);
     void close();
 };
+
+Database *initDb();

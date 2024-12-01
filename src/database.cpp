@@ -47,3 +47,24 @@ void Database::close()
         db = nullptr;
     }
 }
+
+Database *initDb()
+{
+    Database *db = new Database("clNotes.db");
+
+    string createTableQ = R"(
+        CREATE TABLE IF NOT EXISTS notes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            quick INTEGER DEFAULT 1,
+            title TEXT NOT NULL,
+            content TEXT NOT NULL
+        );
+    )";
+
+    if (!db->execQuery(createTableQ))
+    {
+        cerr << "Error Creating/Opening Table Return Code 1" << endl;
+        return nullptr;
+    }
+    return db;
+}
